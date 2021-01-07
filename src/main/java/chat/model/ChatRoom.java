@@ -1,5 +1,7 @@
 package chat.model;
 
+import net.bytebuddy.asm.Advice;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
@@ -8,16 +10,24 @@ import java.util.Set;
  * Modela una sala de chat. Por favor, revise detenidamente la clase y complete las partes omitidas
  * atendiendo a los comentarios indicados mediante @TODO
  */
-// @TODO completar las anotaciones de la clase
+@Entity
+@Table(name = "chatrooms")
 public class ChatRoom {
 
-    // @TODO completar las anotaciones del atributo id (autogenerado)
+    @Id
+    @GeneratedValue
+    @Column(name = "id")
+    private Long id;
 
-    // @TODO completar las anotaciones del atributo name
+    @Column(name = "name")
+    private String name;
 
-    // @TODO completar las anotaciones del atributo creator
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "createdBy")
+    private User creator;
 
-    // @TODO completar las anotaciones del atributo messages
+    @OneToMany(mappedBy = "chatRoom", cascade = CascadeType.ALL)
+    private Set<Message> messages;
 
     public ChatRoom() {
 
@@ -26,7 +36,7 @@ public class ChatRoom {
     public ChatRoom(String name, User creator) {
         this.name = name;
         this.creator = creator;
-        this.messages = new HashSet<Message>();
+        this.messages = new HashSet<>();
     }
 
     public long getId() {

@@ -9,16 +9,25 @@ import java.util.Date;
  * Modela un mensaje. Por favor, revise detenidamente la clase y complete las partes omitidas
  * atendiendo a los comentarios indicados mediante @TODO
  */
-// @TODO completar las anotaciones de la clase
+    @Entity
+    @Table(name = "messages")
 public class Message {
 
-    // @TODO completar las anotaciones del atributo id (autogenerado)
+@Id
+        @GeneratedValue
+@Column(name = "id")
+    private Long id;
 
-    // @TODO completar las anotaciones del atributo text
+@Column(name = "text")
+    private String text;
 
-    // @TODO completar las anotaciones del atributo chatRoom
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "chatRoom")
+    private ChatRoom chatRoom;
 
-    // @TODO completar las anotaciones del atributo creator
+    @ManyToOne(optional = false)
+@JoinColumn(name = "createdBy")
+    private User creator;
 
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
